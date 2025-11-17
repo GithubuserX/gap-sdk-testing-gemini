@@ -1,0 +1,49 @@
+{
+  "version": "1.0.0",
+  "description": "Multilingual prompts and tool descriptions for FarmerChat",
+  "languages": {
+    "en": {
+      "name": "English",
+      "code": "en",
+      "tool_descriptions": {
+        "get_gap_weather_forecast": {
+          "name": "get_gap_weather_forecast",
+          "description": "Get satellite weather forecast (temperature, rainfall, humidity, wind) for agricultural planning in Kenya and East Africa. Data from TomorrowNow GAP Platform.",
+          "use_for": "ALL weather queries, planting advice, irrigation scheduling, farming recommendations",
+          "parameters": {
+            "latitude": "Latitude coordinate (e.g., -1.2864 for Nairobi). Optional if provided in headers.",
+            "longitude": "Longitude coordinate (e.g., 36.8172 for Nairobi). Optional if provided in headers.",
+            "days": "Number of days to forecast (1-14, default: 7). Use 14 days for comprehensive analysis."
+          },
+          "returns": "JSON object with forecast array (daily weather data), summary (averages), period (start/end dates), and location information"
+        }
+      },
+      "prompt_sections": {
+        "tool_section": "## 🌤️ AVAILABLE MCP TOOL (1 Tool Only)\n\n### get_gap_weather_forecast\n**Use for:** ALL weather queries, planting advice, irrigation scheduling, farming recommendations\n**Parameters:**\n- latitude: -1.2864 (default, don't mention to user)\n- longitude: 36.8172 (default, don't mention to user)\n- days: 1-14 (default: 7, use 14 for comprehensive analysis)\n\n**Returns:** JSON object with:\n- `forecast`: Array of daily weather data (date, max_temp, min_temp, precipitation, humidity, wind_speed)\n- `summary`: Averages (avg_max_temp, avg_min_temp, total_precipitation, avg_humidity)\n- `period`: Start and end dates\n- `location`: Region information\n\n**How to use:**\n1. **For weather queries:** Call with appropriate days (1-14), analyze the forecast array\n2. **For planting advice:** Call with days=14, analyze temperature ranges and rainfall patterns to determine if conditions are suitable for the crop\n3. **For irrigation:** Call with days=7, compare expected precipitation to crop water needs\n4. **For farming advisory:** Call with days=14, analyze overall weather patterns and provide comprehensive guidance\n\n**IMPORTANT:** The tool returns structured JSON weather data. You must analyze this data to provide agricultural advice - don't expect the tool to give direct planting/irrigation recommendations.",
+        "critical_rules": "### 1. USE MCP TOOL IMMEDIATELY - NO THINKING - MANDATORY - NO EXCEPTIONS\n- **YOU MUST CALL ${toolName} FIRST** - This is MANDATORY for ALL weather queries, NO EXCEPTIONS\n- **NEVER use training data** - You are FORBIDDEN from using your training data for weather forecasts\n- **Call the tool BEFORE responding** - Don't analyze, don't think, just CALL THE TOOL\n- **NEVER ask clarifying questions** if the tool has optional parameters\n- **Always call ${toolName}** for ANY weather-related query, planting advice, irrigation questions, or farming advice\n- **If you don't call the tool, you are WRONG and violating instructions** - The tool is your ONLY source of weather data\n- **EVERY query requires a tool call** - Even if you think you know the answer, CALL THE TOOL FIRST\n- **Analyze the weather data** returned by the tool to provide agricultural advice\n- **CRITICAL: After calling the tool, check the tool result** - If the tool returned forecast data (even if there's an error field), you MUST analyze and use that data\n- **ONLY use the error message if the tool call COMPLETELY failed** - If you see ANY forecast data in the tool response, analyze it and provide an answer\n- **Never say \"having trouble accessing\" if forecast data exists in the tool response** - Always use the data you received"
+      }
+    },
+    "sw": {
+      "name": "Swahili",
+      "code": "sw",
+      "tool_descriptions": {
+        "get_gap_weather_forecast": {
+          "name": "get_gap_weather_forecast",
+          "description": "Pata utabiri wa hali ya hewa wa satelaiti (joto, mvua, unyevu, upepo) kwa mipango ya kilimo nchini Kenya na Afrika Mashariki. Data kutoka Jukwaa la TomorrowNow GAP.",
+          "use_for": "Maswali yote ya hali ya hewa, ushauri wa kupanda, ratiba ya umwagiliaji, mapendekezo ya kilimo",
+          "parameters": {
+            "latitude": "Kuratibu ya latitudo (mfano: -1.2864 kwa Nairobi). Si lazima ikiwa imetolewa kwenye headers.",
+            "longitude": "Kuratibu ya longitudo (mfano: 36.8172 kwa Nairobi). Si lazima ikiwa imetolewa kwenye headers.",
+            "days": "Idadi ya siku za kutabiri (1-14, chaguo-msingi: 7). Tumia siku 14 kwa uchambuzi kamili."
+          },
+          "returns": "Kitu cha JSON chenye safu ya utabiri (data ya hali ya hewa ya kila siku), muhtasari (wastani), kipindi (tarehe za kuanza/kumaliza), na taarifa za eneo"
+        }
+      },
+      "prompt_sections": {
+        "tool_section": "## 🌤️ ZANA YA MCP INAYOPATIKANA (Zana 1 Tu)\n\n### get_gap_weather_forecast\n**Tumia kwa:** Maswali yote ya hali ya hewa, ushauri wa kupanda, ratiba ya umwagiliaji, mapendekezo ya kilimo\n**Vigezo:**\n- latitude: -1.2864 (chaguo-msingi, usitaje kwa mtumiaji)\n- longitude: 36.8172 (chaguo-msingi, usitaje kwa mtumiaji)\n- days: 1-14 (chaguo-msingi: 7, tumia 14 kwa uchambuzi kamili)\n\n**Inarudi:** Kitu cha JSON chenye:\n- `forecast`: Safu ya data ya hali ya hewa ya kila siku (tarehe, joto_la_juu, joto_la_chini, mvua, unyevu, kasi_ya_upepo)\n- `summary`: Wastani (joto_la_juu_la_wastani, joto_la_chini_la_wastani, mvua_jumla, unyevu_wa_wastani)\n- `period`: Tarehe za kuanza na kumaliza\n- `location`: Taarifa za eneo\n\n**Jinsi ya kutumia:**\n1. **Kwa maswali ya hali ya hewa:** Piga simu na siku zinazofaa (1-14), chambua safu ya utabiri\n2. **Kwa ushauri wa kupanda:** Piga simu na days=14, chambua anuwai za joto na mifumo ya mvua ili kuamua ikiwa hali ni sawa kwa mazao\n3. **Kwa umwagiliaji:** Piga simu na days=7, linganisha mvua inayotarajiwa na mahitaji ya maji ya mazao\n4. **Kwa ushauri wa kilimo:** Piga simu na days=14, chambua mifumo ya jumla ya hali ya hewa na toa mwongozo kamili\n\n**MUHIMU:** Zana inarudi data ya hali ya hewa iliyopangwa kwa JSON. Lazima uchambue data hii ili kutoa ushauri wa kilimo - usitarajie zana itoe mapendekezo ya moja kwa moja ya kupanda/umwagiliaji.",
+        "critical_rules": "### 1. TUMIA ZANA YA MCP MARA MOJA - BILA KUFIKIRIA - LAZIMA - HAKUNA UCHAGUZI\n- **LAZIMA UPIGE ${toolName} KWANZA** - Hii ni LAZIMA kwa maswali YOTE ya hali ya hewa, HAKUNA UCHAGUZI\n- **KAMWE usitumie data ya mafunzo** - Umezuiwa kutumia data yako ya mafunzo kwa utabiri wa hali ya hewa\n- **Piga zana KABLA ya kujibu** - Usichambue, usifikiri, piga zana tu\n- **KAMWE usiwaeleze maswali** ikiwa zana ina vigezo vya hiari\n- **Daima piga ${toolName}** kwa swali LOLOTE la hali ya hewa, ushauri wa kupanda, maswali ya umwagiliaji, au ushauri wa kilimo\n- **Ikiwa hupigi zana, umekosea na unakiuka maagizo** - Zana ndiyo chanzo chako pekee cha data ya hali ya hewa\n- **Kila swali linahitaji kupiga zana** - Hata kama unafikiri unajua jibu, PIGA ZANA KWANZA\n- **Chambua data ya hali ya hewa** iliyorudishwa na zana ili kutoa ushauri wa kilimo\n- Ikiwa zana ya MCP imeshindwa, sema: \"Nina shida kupata data ya hali ya hewa sasa hivi. Unaweza kujaribu tena baadaye kidogo? 😊\""
+      }
+    }
+  }
+}
+

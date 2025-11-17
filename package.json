@@ -1,0 +1,35 @@
+{
+  "name": "gap-sdk-testing-gemini",
+  "version": "1.0.0",
+  "description": "Google Gemini SDK-based testing script for GAP MCP server with structured data support",
+  "type": "module",
+  "main": "batch-test-sdk.js",
+  "scripts": {
+    "test": "node batch-test-sdk.js --queries=5",
+    "test:10": "node batch-test-sdk.js --queries=10",
+    "test:100": "node batch-test-sdk.js --queries=100",
+    "clean:excel": "node cleanup-excel.js",
+    "analyze:responses": "node analyze-responses.js"
+  },
+  "keywords": [
+    "gap",
+    "mcp",
+    "testing",
+    "gemini",
+    "sdk",
+    "structured-data"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@google/genai": "^1.0.0",
+    "dotenv": "^17.2.3",
+    "node-fetch": "^3.3.2",
+    "openai": "^4.0.0",
+    "xlsx": "^0.18.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
+
